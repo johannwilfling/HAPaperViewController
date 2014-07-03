@@ -40,6 +40,10 @@
         panGestureRecognizer.maximumNumberOfTouches = 1;
         [collectionView addGestureRecognizer:panGestureRecognizer];
         
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTapGesture:)];
+        tapGesture.numberOfTapsRequired = 2;
+        [collectionView addGestureRecognizer:tapGesture];
+        
         self.collectionView = collectionView;
     }
     return self;
@@ -51,6 +55,11 @@
     return YES;
 }
 
+- (void)handleTapGesture:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateRecognized) {
+        [self.delegate interactionBeganAtPoint:CGPointMake(0, 0)];
+    }
+}
 
 - (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
